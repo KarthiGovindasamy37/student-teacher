@@ -37,7 +37,6 @@ export let Provider=({children})=>{
         setsdata(students.data);
         setloading(false)
     
-        
     }catch(error){
 
     }
