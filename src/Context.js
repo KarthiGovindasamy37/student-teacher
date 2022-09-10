@@ -36,7 +36,7 @@ export let Provider=({children})=>{
        let students=await axios.get("https://62ff703934344b6431f96fea.mockapi.io/students")
         setsdata(students.data);
         setloading(false)
-        // setmdata("0")
+    
         
     }catch(error){
 

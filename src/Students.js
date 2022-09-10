@@ -10,11 +10,13 @@ function Students() {
 let context1=useContext(context)
 let deleteStudent=async(e)=>{
     try {
+        let ask=window.confirm("flagged to deletion")
+        if(ask){
         await axios.delete(`https://62ff703934344b6431f96fea.mockapi.io/students/${e.id}`)
         let i=context1.sdata.findIndex((ele)=>ele.id===e.id)
         context1.sdata.splice(i,1);
         context1.setsdata([...context1.sdata])
-        
+        }
         
     } catch (error) {
         

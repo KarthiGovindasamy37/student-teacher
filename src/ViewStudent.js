@@ -6,7 +6,7 @@ function ViewStudent() {
     let params=useParams()
     let[data,setdata]=useState({})
     let[loading,setloading]=useState(false)
-
+    
     useEffect(()=>{
       loadStudent();
     },[])
