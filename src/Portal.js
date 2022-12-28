@@ -4,15 +4,20 @@ import Topbar from "./Topbar";
 
 function Portal() {
     return (
-      <div id="wrapper">
+      <div>
+        <div className="d-flex">
+          <div className="col-2">
       <Sidebar></Sidebar>
-      <div id="content-wrapper" className="d-flex flex-column">
-      <div id="content">
+      </div>
+      
+      <div className="col-10">
+      
         <Topbar></Topbar>
          <Outlet/>
         </div>
       </div>
-       </div>
+      </div>
+      
     )
   }
   export default Portal;

@@ -1,11 +1,12 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import {env} from './Config'
 
 function ViewStudent() {
     let params=useParams()
     let[data,setdata]=useState({})
-    let[loading,setloading]=useState(false)
+    let[loading,setloading]=useState(true)
     
     useEffect(()=>{
       loadStudent();
@@ -13,12 +14,11 @@ function ViewStudent() {
 
     let loadStudent=async()=>{
         try {
-            setloading(true)
-            let student= await axios.get(`https://62ff703934344b6431f96fea.mockapi.io/students/${params.id}`)
+            let student= await axios.get(`${env.api}/student/${params.id}`)
             setdata(student.data)
             setloading(false)
         } catch (error) {
-            
+            alert(error.response.data.message)
         }
     }
   return (
@@ -32,7 +32,7 @@ function ViewStudent() {
         <h1>{`Name : ${data.name}`}</h1>
         <h1>{`Roll No : ${data.rollno}`}</h1>
         <h1>{`Age : ${data.age}`}</h1>
-        <h1>{`Tutor : ${data.teacher}`}</h1>
+        <h1>{`Mentor : ${data.teacher}`}</h1>
         
     </div>
 }

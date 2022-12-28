@@ -1,8 +1,8 @@
-import React, { useContext } from 'react'
-import context from './Context'
+import React from 'react'
+
 
 function Teacher2() {
-    let context1=useContext(context)
+  
   return (
     <div>
         <h1>Name : Shalini</h1>
@@ -36,14 +36,14 @@ function Teacher2() {
                     </tfoot>
                     <tbody>
                     {
-                            context1.t2data.map((e,i)=>{
-                                return <tr>
-                               <td>{i+1}</td> 
-                               <td>{e.name}</td>
-                               <td>{e.rollno}</td>
-                               <td>{e.age}</td>
-                            </tr>
-                            })
+                            // context1.t2data.map((e,i)=>{
+                            //     return <tr>
+                            //    <td>{i+1}</td> 
+                            //    <td>{e.name}</td>
+                            //    <td>{e.rollno}</td>
+                            //    <td>{e.age}</td>
+                            // </tr>
+                            // })
                         }
                     </tbody>
                         </table>

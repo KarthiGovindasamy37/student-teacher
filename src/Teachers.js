@@ -1,23 +1,21 @@
 import React, { useEffect, useState } from 'react'
-import axios from 'axios';
+import axios from 'axios'
 import { Link } from 'react-router-dom'
-import { env } from './Config';
+import { env } from './Config'
 
-
-function Students() {
-
-    let[students,setStudents]=useState([])
+function Teachers() {
+  
+    let[teachers,setTeachers]=useState([])
     let[loading,setLoading]=useState(true)
 
     useEffect(()=>{
-     loadStudents()
+     loadTeachers()
     },[])
 
-    const loadStudents=async()=>{
+    const loadTeachers=async()=>{
         try {
-            setLoading(true)
-            let studentsData=await axios.get(`${env.api}/students`)
-             setStudents(studentsData.data)
+            let teachersData=await axios.get(`${env.api}/teachers`)
+             setTeachers(teachersData.data)
              setLoading(false)
         } catch (error) {
             alert(error.response.data.message)
@@ -25,13 +23,13 @@ function Students() {
     }
 
 
-let deleteStudent=async(e)=>{
+let deleteTeacher=async(e)=>{
     try {
         let ask=window.confirm("Flagged to deletion")
         if(ask){
-        await axios.delete(`${env.api}/student/${e._id}`)
-        let remain = students.filter(ele=>ele._id !== e._id)
-        setStudents(remain)
+        await axios.delete(`${env.api}/teacher/${e._id}`)
+        let remain = teachers.filter(ele=>ele._id !== e._id)
+        setTeachers(remain)
         }
         
     } catch (error) {
@@ -48,8 +46,8 @@ let deleteStudent=async(e)=>{
             </div> :
     <div> 
         <div className="d-flex mb-4">
-    <h1 className="text-secondary ">Students List</h1>
-    <Link to="/add-student" className='ms-4' > <button className=" btn  btn-primary mt-2 ms-5">Add Student</button></Link>
+    <h1 className="text-secondary ">Teachers List</h1>
+    <Link to="/add-teacher" className='ms-4' > <button className=" btn  btn-info mt-2 ms-5">Add Teacher</button></Link>
 </div>
 
 
@@ -59,26 +57,24 @@ let deleteStudent=async(e)=>{
                         <tr>
                             <th>Sl</th>
                             <th>Name</th>
-                            <th>Roll No</th>
+                            <th>Emp No</th>
                             <th>Age</th>
-                            <th>Tutor</th>
                             <th>Actions</th>
                             
                         </tr>
                     </thead>
                     <tbody>
                         {
-                           students.map((e,i)=>{
+                           teachers.map((e,i)=>{
                                 return <tr>
                                <td>{i+1}</td> 
                                <td>{e.name}</td>
-                               <td>{e.rollno}</td>
+                               <td>{e.emp_no}</td>
                                <td>{e.age}</td>
-                               <td>{e.teacher}</td>
                                <td>
-                                <Link to={`/view-student/${e._id}`} className='btn btn-success px-4 me-3'>View</Link>
-                                <Link to={`/edit-student/${e._id}`} className='btn btn-warning px-4 me-3'>Edit</Link>
-                                <button onClick={()=>{deleteStudent(e)}} className='btn btn-danger'>Delete</button>
+                                <Link to={`/view-teacher/${e._id}`} className='btn btn-success px-4 me-3'>View</Link>
+                                <Link to={`/edit-teacher/${e._id}`} className='btn btn-warning px-4 me-3'>Edit</Link>
+                                <button onClick={()=>{deleteTeacher(e)}} className='btn btn-danger'>Delete</button>
                                </td>
 
 
@@ -92,7 +88,8 @@ let deleteStudent=async(e)=>{
            
 }
         </div>
+
   )
 }
 
-export default Students
+export default Teachers

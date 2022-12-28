@@ -3,54 +3,21 @@ import { Link } from 'react-router-dom';
 
 function Sidebar() {
   return (
-    <div>
-        <div id="wrapper">
-
-{/* <!-- Sidebar --> */}
-<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
-    {/* <!-- Sidebar - Brand --> */}
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-        <div class="sidebar-brand-icon rotate-n-15">
-            <i class="fas fa-laugh-wink"></i>
-        </div>
-        <div class="sidebar-brand-text mx-3">Student-Teacher</div>
-    </a>
-
-    {/* <!-- Divider --> */}
-    <hr class="sidebar-divider my-0"/>
-
-    {/* <!-- Nav Item - Dashboard --> */}
-    <li class="nav-item active">
-        <Link class="nav-link" to="/portal/students">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Students</span></Link>
-    </li>
-
-    {/* <!-- Divider --> */}
-    <hr class="sidebar-divider"/>
-    <li class="nav-item active">
-        <Link class="nav-link" to="/portal/teacher1">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Teacher-1</span></Link>
-    </li>
-
-    {/* <!-- Divider --> */}
-    <hr class="sidebar-divider"/>
-    <li class="nav-item active">
-        <Link class="nav-link" to="/portal/teacher2">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Teacher-2</span></Link>
-    </li>
-
-    {/* <!-- Divider --> */}
-    <hr class="sidebar-divider"/>
-    </ul>
+    <div className='sidebar'>
+    <div className='pt-3 text-white'>
+        <h3 className='text-center'>STUDENT-</h3>
+        <h3 className='ps-4 ms-4'>TEACHER</h3>
     </div>
-
+    <hr className='hr-tag'/>
+    
+    <Link to="/" className='link'><h5 className='ps-3'>Students</h5></Link>
+    <hr className='hr-tag'/>
+    <Link to="/teachers" className='link'><h5 className='ps-3'>Teachers</h5></Link>
+    <hr className='hr-tag'/>
+    
     </div>
     
-  )
+     )
 }
 
 export default Sidebar;

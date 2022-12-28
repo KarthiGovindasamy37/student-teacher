@@ -1,13 +1,14 @@
-import React, { useContext, useEffect } from 'react'
+import React, {  useEffect } from 'react'
 import { useFormik } from 'formik'
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
-import context from './Context';
+import { env } from './Config';
+
 
 
 function EditStudent() {
      
-     let context1=useContext(context)
+     
      let params=useParams() 
      let navigate=useNavigate() 
     let formik=useFormik({
@@ -18,27 +19,31 @@ function EditStudent() {
         teacher:""
      },
      validate:(values)=>{
-        let a={};
+        let errors={};
         if(values.name===""){
-            a.name="Please enter student name"
+          errors.name="Please enter student name"
         }
         if(values.teacher===""){
-            a.teacher="Please assign a teacher"
+          errors.teacher="Please assign a teacher"
+        }
+        if(values.age===""){
+          errors.age="Please mention age"
         }
         if(values.rollno===""){
-          a.teacher="Please enter Roll No."
+          errors.rollno="Please enter roll No."
       }
 
-        return a;
+        return errors;
      },
      onSubmit:async(values)=>{
         try {
-           await axios.put(`https://62ff703934344b6431f96fea.mockapi.io/students/${params.id}`,values)
-           alert("User details updated")
-           navigate("/portal/students")
-           context1.setmdata([...context1.mdata],1)
+          let student = await axios.put(`${env.api}/student/${params.id}`,values)
+           if(student.status===200){
+            alert(student.data.message)
+            navigate("/")
+           }
         } catch (error) {
-            
+            alert(error.response.data.message)
         }
      }
 
@@ -50,7 +55,7 @@ function EditStudent() {
     
     let getdata=async()=>{
         try {
-            let student=await axios.get(`https://62ff703934344b6431f96fea.mockapi.io/students/${params.id}`)
+            let student=await axios.get(`${env.api}/student/${params.id}`)
             formik.setValues({
                 name:student.data.name,
                 rollno:student.data.rollno,
@@ -58,7 +63,7 @@ function EditStudent() {
                 teacher:student.data.teacher
             })
         } catch (error) {
-            
+            alert(error.response.data.message)
         }
     }
   return (
@@ -71,7 +76,7 @@ function EditStudent() {
           name="name" 
           onChange={formik.handleChange}
           value={formik.values.name}/>
-          <span>{formik.errors.name}</span>
+          <span style={{color:"red"}}>{formik.errors.name}</span>
           </div>
           <div className="col-lg-6">
           <label>Roll No</label>
@@ -79,7 +84,7 @@ function EditStudent() {
           name="rollno"
           onChange={formik.handleChange}
           value={formik.values.rollno}/>
-          <span>{formik.errors.rollno}</span>
+          <span style={{color:"red"}}>{formik.errors.rollno}</span>
           </div>
           <div className="col-lg-6">
           <label>Age</label>
@@ -87,6 +92,7 @@ function EditStudent() {
           name="age"
           onChange={formik.handleChange}
           value={formik.values.age}/>
+          <span style={{color:"red"}}>{formik.errors.age}</span>
           </div>
           <div className="col-lg-6">
           <label>Teacher</label>
@@ -98,7 +104,7 @@ function EditStudent() {
             <option>teacher1</option>
             <option>teacher2</option>
           </select>
-          <span>{formik.errors.teacher}</span>
+          <span style={{color:"red"}}>{formik.errors.teacher}</span>
           </div>
           <div className="d-flex justify-content-center mt-4">
               <button disabled={!formik.isValid} className="btn btn-warning" type="submit">Update</button>

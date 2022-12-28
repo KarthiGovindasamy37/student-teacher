@@ -1,40 +1,37 @@
-import logo from './logo.svg';
 import './App.css';
-import Sidebar from './Sidebar';
-import Topbar from './Topbar';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import Portal from './Portal';
 import {
   BrowserRouter,
   Routes,
   Route,
 } from "react-router-dom";
-import Login from './Login';
 import Students from './Students';
 import AddStudent from './AddStudent';
 import ViewStudent from './ViewStudent';
 import EditStudent from './EditStudent';
-import Teacher1 from './Teacher1';
-import { Provider } from './Context';
-import Teacher2 from './Teacher2';
+import Teachers from './Teachers';
+import AddTeacher from './AddTeacher';
+import ViewTeacher from './ViewTeacher';
+import EditTeacher from './EditTeacher';
+
 
 function App() {
   return (
 <BrowserRouter>
-<Provider>
 <Routes>
-<Route path="/" element={<Login/>} />
-<Route path="/portal" element={<Portal/>}>
-<Route path="students" element={<Students/>}/>
+<Route path="/" element={<Portal/>}>
+<Route index element={<Students/>}/>
 <Route path="add-student" element={<AddStudent/>}/>
 <Route path="view-student/:id" element={<ViewStudent/>}/>
 <Route path="edit-student/:id" element={<EditStudent/>}/>
-<Route path="teacher1" element={<Teacher1/>}/>
-<Route path="teacher2" element={<Teacher2/>}/>
+<Route path="teachers" element={<Teachers/>}/>
+<Route path="add-teacher" element={<AddTeacher/>}/>
+<Route path="view-teacher/:id" element={<ViewTeacher/>}/>
+<Route path="edit-teacher/:id" element={<EditTeacher/>}/>
 </Route>
 
 </Routes>
-</Provider>
-
 </BrowserRouter>  );
 }
 

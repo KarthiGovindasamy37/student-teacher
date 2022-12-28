@@ -1,42 +1,62 @@
 import axios from "axios";
-import React from "react";
+import React, { useEffect } from "react";
 import { useFormik } from 'formik'
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {env} from './Config'
 
 
-function AddStudent() {
+function EditTeacher() {
+
+    let params=useParams()
+
+    useEffect(()=>{
+        loadTeacher()
+    },[])
+
+    let loadTeacher=async()=>{
+        try {
+            let teacher=await axios.get(`${env.api}/editteacher/${params.id}`)
+            formik.setValues({
+                name:teacher.data.name,
+                age:teacher.data.age,
+                emp_no:teacher.data.emp_no,
+                teacher_id:teacher.data.teacher_id
+            })
+        } catch (error) {
+            alert(error.response.data.message)
+        }
+    }
   
   let navigate=useNavigate()
     let formik=useFormik({
         initialValues:{
             name:"",
-            rollno:"",
+            emp_no:"",
             age:"",
-            teacher:""
+            teacher_id:""
         },
         validate:(values)=>{
            let errors={}
            if(values.name===""){
-            errors.name="Please enter your name"
+            errors.name="Please enter name"
            }
-           if(values.rollno===""){
-            errors.rollno="Please enter roll No."
+           if(values.emp_no===""){
+            errors.rollno="Please enter employee no."
            }
            if(values.age===""){
             errors.age="Please mention age"
            }
-           if(values.teacher===""){
-            errors.teacher="Please select a teacher"
+           if(values.teacher_id===""){
+            errors.teacher="Please mention teacher id"
            }
            return errors;
         },
         onSubmit:async(values)=>{
             try {
-               let addStudent= await axios.post(`${env.api}/createstudent`,values)
-                if(addStudent.status===200){
-                  alert(addStudent.data.message)
-                  navigate("/")
+               let updateTeacher= await axios.put(`${env.api}/teacher/${params.id}`,values)
+                if(updateTeacher.status===200){
+                  alert(updateTeacher.data.message)
+                  navigate("/teachers")
                 }                
             } catch (error) {
                 alert(error.response.data.message)
@@ -56,12 +76,12 @@ function AddStudent() {
             <span style={{color:"red"}}>{formik.errors.name}</span>
             </div>
             <div className="col-lg-6  mb-lg-4">
-            <label>Roll No</label>
+            <label>Employee No</label>
             <input className="form-control" type="text"
-            name="rollno"
+            name="emp_no"
             onChange={formik.handleChange}
-            value={formik.values.rollno}/>
-            <span style={{color:"red"}}>{formik.errors.rollno}</span>
+            value={formik.values.emp_no}/>
+            <span style={{color:"red"}}>{formik.errors.emp_no}</span>
             </div>
             <div className="col-lg-6">
             <label>Age</label>
@@ -72,19 +92,16 @@ function AddStudent() {
             <span style={{color:"red"}}>{formik.errors.age}</span>
             </div>
             <div className="col-lg-6">
-            <label>Teacher</label>
+            <label>Teacher id</label>
             <br/>
-            <select className="form-control"
-            name="teacher"
+            <input className="form-control" type="text"
+            name="teacher_id"
             onChange={formik.handleChange}
-            value={formik.values.teacher}>
-              <option value="teacher1" selected>teacher1</option>
-              <option value="teacher2">teacher2</option>
-            </select>
-            <span style={{color:"red"}}>{formik.errors.teacher}</span>
+            value={formik.values.teacher_id}/>              
+            <span style={{color:"red"}}>{formik.errors.teacher_id}</span>
             </div>
             <div className="d-flex justify-content-center mt-4">
-                <button disabled={!formik.isValid} className="btn btn-warning" type="submit">Add Student</button>
+                <button disabled={!formik.isValid} className="btn btn-warning" type="submit">Update</button>
             </div>
 
         </div>
@@ -93,4 +110,4 @@ function AddStudent() {
   );
 }
 
-export default AddStudent;
+export default EditTeacher
